@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day-Night Toggle</title>
+
+    <style>
+        body {
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            padding: 3px 5px;
+            width: 110px;
+            position: relative;
+            border-radius: 100px;
+            margin-left: 46%;
+            background-color: black;
+            margin-top: 5%;
+            cursor: pointer;
+        }
+
+        .circleMover {
+            position: absolute;
+            width: 43px;
+            height: 43px;
+            background-color: white;
+            border-radius: 50%;
+            bottom: 8.5%;
+        }
+
+        .animationToLeft {
+            animation-name: moveToLeft;
+            animation-duration: 0.5s;
+            animation-fill-mode: forwards;
+        }
+
+        .animationToRight {
+            animation-name: moveToRight;
+            animation-duration: 0.5s;
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes moveToLeft {
+            0% {
+                left: 3px;
+            }
+
+            100% {
+                left: 60%;
+            }
+        }
+
+        @keyframes moveToRight {
+            0% {
+                left: 60%;
+            }
+
+            100% {
+                left: 5px;
+            }
+        }
+
+        .toggleText {
+            text-align: center;
+            font-size: 5rem;
+            font-weight: 900;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+
+        /* Moon and Sun */
+        .celestial-body {
+            position: absolute;
+            display: none;
+            width: 150px;
+            height: 150px;
+        }
+
+        .moon {
+            top: -10%;
+        }
+
+        .sun {
+            bottom: 30%;
+            left: 15%;
+        }
+
+        .animationUp {
+            animation-duration: 0.7s;
+            animation-fill-mode: forwards;
+        }
+
+        .animationDown {
+            animation-duration: 0.7s;
+            animation-fill-mode: forwards;
+        }
+
+        .moonDown,
+        .sunUp {
+            display: block;
+        }
+
+        .moonUp,
+        .sunDown {
+            display: block;
+            top: -100%;
+        }
+
+        @keyframes moveDown {
+            0% {
+                top: -10%;
+                right: -10%;
+            }
+
+            100% {
+                top: 60%;
+                right: 13%;
+            }
+        }
+
+        @keyframes moveUp {
+            0% {
+                top: 60%;
+                right: 13%;
+            }
+
+            100% {
+                top: -100%;
+                right: -10%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div> <img width="42" height="42" src="https://img.icons8.com/color/48/smiling-sun.png" alt="smiling-sun" />
+        </div>
+        <div class="circleMover"></div>
+        <div><img width="42" height="42" src="https://img.icons8.com/arcade/64/crescent-moon.png" alt="crescent-moon" />
+        </div>
+    </div>
+
+    <p class="toggleText">Click on the Toggle Button</p>
+
+    <!-- Sun -->
+    <div class="celestial-body sun">
+        <img src="https://img.icons8.com/skeuomorphism/128/experimental-sun-skeuomorphism.png"
+            alt="experimental-sun-skeuomorphism" />
+    </div>
+
+    <!-- Moon  -->
+    <div class="celestial-body moon">
+        <img src="https://img.icons8.com/color/96/moon-satellite.png" alt="moon-satellite" />
+    </div>
+
+    <script>
+        const circleMover = document.querySelector(".circleMover");
+        const container = document.querySelector(".container");
+        const bodyElement = document.body;
+        const toggleText = document.querySelector(".toggleText");
+        const moon = document.querySelector(".moon");
+        const sun = document.querySelector(".sun");
+
+        let isNightMode = false;
+
+        container.addEventListener("click", () => {
+            isNightMode = !isNightMode;
+
+            if (isNightMode) {
+                applyNightMode();
+            } else {
+                applyDayMode();
+            }
+        });
+
+        function applyNightMode() {
+            circleMover.classList.add("animationToLeft");
+            circleMover.classList.remove("animationToRight");
+            bodyElement.style.backgroundColor = "black";
+            toggleText.style.color = "white";
+            container.style.backgroundColor = "rgb(34,34,34)";
+            moon.classList.add("animationDown", "moonDown");
+            moon.classList.remove("animationUp", "moonUp");
+            sun.classList.add("animationDown", "sunDown");
+            sun.classList.remove("animationUp", "sunUp");
+        }
+
+        function applyDayMode() {
+            circleMover.classList.remove("animationToLeft");
+            circleMover.classList.add("animationToRight");
+            bodyElement.style.backgroundColor = "white";
+            toggleText.style.color = "rgb(34,34,34)";
+            moon.classList.add("animationUp", "moonUp");
+            moon.classList.remove("animationDown", "moonDown");
+            sun.classList.add("animationUp", "sunUp");
+            sun.classList.remove("animationDown", "sunDown");
+        }
+    </script>
+</body>
+
+</html>
+
